@@ -1,0 +1,20 @@
+---
+- hosts: all
+  become: true
+  tasks:
+   - name: apt update
+     command: sudo apt update
+   - name: install python & pip
+     command: sudo apt install -y python-pip
+   - name: Inastall docker
+     command: sudo apt-get install -y docker.io
+     become: yes
+     become_user: root
+   - name: start docker service
+     command: sudo systemctl start docker
+     become: yes
+     become_user: root
+   - name: deploy the image from docker-hub and run as container
+     command: docker run -itd -p8050:8081 kavanapc/insurance_project:latest
+
+
